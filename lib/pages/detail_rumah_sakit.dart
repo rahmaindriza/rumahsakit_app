@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/rumah_sakit.dart';
+import 'map_fullscreen_page.dart'; // halaman tambahan
 
 class DetailRumahSakitPage extends StatelessWidget {
   final RumahSakit rumahSakit;
@@ -16,12 +17,12 @@ class DetailRumahSakitPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFF6D4C41), // coklat
         foregroundColor: Colors.white,
-        title: const Text('Detail Rumah Sakit'),
+        title: Text(rumahSakit.nama), // judul sesuai nama rumah sakit
         centerTitle: true,
       ),
       body: Column(
         children: [
-          // Maps section
+          // Peta kecil di atas
           SizedBox(
             height: 240,
             width: double.infinity,
@@ -62,12 +63,6 @@ class DetailRumahSakitPage extends StatelessWidget {
                   Center(
                     child: Column(
                       children: [
-                        // const Icon(
-                        //   Icons.local_hospital_rounded,
-                        //   size: 40,
-                        //   color: Color(0xFF6D4C41),
-                        // ),
-                        // const SizedBox(height: 8),
                         Text(
                           rumahSakit.nama,
                           textAlign: TextAlign.center,
@@ -98,6 +93,33 @@ class DetailRumahSakitPage extends StatelessWidget {
                     title: const Text('Tipe Rumah Sakit'),
                     subtitle: Text(rumahSakit.tipe),
                   ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => MapFullscreenPage(rumahSakit: rumahSakit),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.map),
+                      label: const Text(
+                        'Detail Map',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF6D4C41),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
